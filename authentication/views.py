@@ -30,15 +30,11 @@ class Home(View):
     def get(self, request):
         return render(request, self.template_name)
 
-class ListView(mixins.PermissionRequiredMixin, View):
+class ListView(mixins.LoginRequiredMixin, View):
     print('is it getting into that')
     template_name = 'users.html'
     object_list = User.users.all()
     login_url = '../../Login'
-    try:
-        permission_required = 'delete'
-    except PermissionDenied:
-        raise HttpResponseForbidden
     context = {
         'object_list' :  object_list 
         }
